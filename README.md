@@ -8,7 +8,7 @@ Padaryta:
   * Klausiame, ar žinome iš anksto, kiek bus namų darbų;
   * Jei žinome:
     * Įvedame nd. skaičių;
-    * Įvedami nd. pažymiai ir saugomi vectoriuje ar dinaminiame masyve;
+    * Įvedami nd. pažymiai ir saugomi vectoriuje;
     * Įvedamas egzamino pažymis;
     * Apskaičiuojamas galutinis paž, t.y. vidurkis, ir mediana;
   * Jei nežinome:
@@ -20,11 +20,11 @@ Padaryta:
   * Automatiškai sugeneruoja, kiek yra moksleivių:
   * Klausiame, ar žinome, kiek bus nd. iš anksto;
   * Jei taip:
-    * Sugeneruojame nd. pažymius automatiškai ir įrašome į vectorių ar masyvą;
+    * Sugeneruojame nd. pažymius automatiškai ir įrašome į vectorių;
     * sugeneruojame egz. paž;
     * Apskaičiuojamas galutinis paž, t.y. vidurkis, ir mediana;
   * Jei nežinome:
-    * Sugeneruojame nd. pažymį automatiškai ir vis klausiame, ar dar bus nd. ir įrašome į vectorių ar masyvą;
+    * Sugeneruojame nd. pažymį automatiškai ir vis klausiame, ar dar bus nd. ir įrašome į vectorių;
     * sugeneruoja egz. pažymį;
     * Apskaičiuojamas galutinis paž, t.y. vidurkis, ir mediana;
  * Pabaigoje klausiame, kokio norime atsakymo formato, ar su vidurkiu, ar su mediana, ar abudu.
