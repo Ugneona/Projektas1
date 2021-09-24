@@ -78,7 +78,7 @@ int main()
             cin.ignore(256, '\n');
             cin >> ats;
         }
-        if (klsm == 't' || klsm == 'T')
+        if (ats == 't' || ats == 'T')
         {
             cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
             cin >> ndSk;
