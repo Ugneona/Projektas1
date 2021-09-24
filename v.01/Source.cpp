@@ -45,8 +45,8 @@ double med(studentas& s, int& ndSk1);
 
 int main()
 {
-    
-    int studentSk, ndSk; 
+
+    int studentSk, ndSk;
     studentas grupe[10];
     char ats, klsm;
     cout << "Ar duomenis vesite pats, ar norite, kad butu sugeneruoti automatiskai? Jei vesite pats veskite t, priesingu atveju veskite n" << endl;
@@ -59,7 +59,7 @@ int main()
         cin >> klsm;
     }
     if (klsm == 't' || klsm == 'T')
-    { 
+    {
         cout << "Iveskite studentu skaiciu: " << endl;
         cin >> studentSk;
         while (studentSk <= 0 || cin.fail())
@@ -102,11 +102,18 @@ int main()
                 pild(grupe[i]);
             }
         }
-     }
+    }
     else {
         srand(time(NULL));
-        studentSk = rand() % 10 + 1;
-        cout << "Studentu skaicius: " << studentSk << endl;
+        cout << "Iveskite studentu skaiciu: " << endl;
+        cin >> studentSk;
+        while (studentSk <= 0 || cin.fail())
+        {
+            cin.clear();
+            cout << "Nurodytas skaicius yra netinkamas, iveskite studentu skaiciu didesni uz 0" << endl;
+            cin.ignore(256, '\n');
+            cin >> studentSk;
+        }
         cout << "Ar namu darbu skaicius yra zinomas is anksto? t- jei taip, n- jei ne" << endl;
         cin >> ats;
         while (isalpha(ats) == false || check_alpha(ats) == false)
@@ -116,10 +123,17 @@ int main()
             cin.ignore(256, '\n');
             cin >> ats;
         }
-        if (klsm == 't' || klsm == 'T')
+        if (ats == 't' || ats == 'T')
         {
-            ndSk = rand() % 10 + 1;
-            cout << "Namu darbu bus: " << ndSk << endl;
+            cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
+            cin >> ndSk;
+            while (cin.fail() || ndSk < 1 || ndSk > 10)
+            {
+                cin.clear();
+                cout << "Namu darbu skaicius yra netinkamas, iveskite skaiciu didesni uz 0" << endl;
+                cin.ignore(256, '\n');
+                cin >> ndSk;
+            }
             for (int i = 0; i < studentSk; i++)
             {
                 vardPavard(grupe[i], i);
@@ -143,7 +157,7 @@ int main()
         cin.ignore(256, '\n');
         cin >> ats;
     }
-    if ( ats == 'v' || ats == 'V')
+    if (ats == 'v' || ats == 'V')
     {
         cout << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Vid.)" << endl;
         cout << "---------------------------------------------------------------" << endl;
@@ -241,7 +255,7 @@ void pild(studentas& s)
             cin >> ats;
         }
     }
-    
+
     cout << "Iveskite egzamino pazymi (1-10): " << endl;
     cin >> s.egz;
     while (cin.fail() || s.egz <= 0 || s.egz > 10)
@@ -292,7 +306,7 @@ void pildrnd(studentas& s)
         }
     }
     s.egz = rand() % 10 + 1;
-    cout << "Egzamino pazymys: " <<s.egz << endl;
+    cout << "Egzamino pazymys: " << s.egz << endl;
     s.galutinis = 0.6 * s.egz + 0.4 * (sum / s.nd.size());
     int dydis = s.nd.size();
     s.mediana = med(s, dydis);
@@ -325,8 +339,8 @@ bool check_string(string& str)
 double med(studentas& s, int& ndSk1)
 {
     sort(s.nd.begin(), s.nd.end());
-    if (ndSk1 % 2 == 0) return (double)(s.nd[(ndSk1/2) - 1] + s.nd[ndSk1/2]) / 2.0;
-    else return (double)s.nd[ndSk1/2];
+    if (ndSk1 % 2 == 0) return (double)(s.nd[(ndSk1 / 2) - 1] + s.nd[ndSk1 / 2]) / 2.0;
+    else return (double)s.nd[ndSk1 / 2];
 }
 
 void pildnd(studentas& s, int& ii, int& ndSk1)
@@ -373,6 +387,7 @@ void pildndrnd(studentas& s, int& ii, int& ndSk1)
         sum += paz;
     }
     s.egz = rand() % 10 + 1;
+    cout << "Egzamino pazymys: " << s.egz << endl;
     s.galutinis = 0.6 * s.egz + 0.4 * (sum / ndSk1);
     s.mediana = med(s, ndSk1);
 }
@@ -389,8 +404,3 @@ bool check_a(char& chr)
     else return false;
 
 }
-
-
-
-
-
