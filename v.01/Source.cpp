@@ -2,7 +2,8 @@
 #include <iomanip> 
 #include <string>
 #include <iostream>
-#include <cstdlib>
+#include <algorithm>
+
 
 using std::cin;
 using std::cout;
@@ -12,59 +13,62 @@ using std::setw;
 using std::left;
 using std::fixed;
 using std::setprecision;
+using std::sort;
 
 
 struct studentas
 {
     string vardas, pavarde;
-    int nd[10]{};
+    double nd[10]{};
     int egz;
     double galutinis;
+    double mediana;
 };
 
-void pild(studentas& s, int& sk1, int& ii);
+void pild(studentas& s, int& ndSk1, int& ii);
 void spausdinti(studentas& s);
 bool check_string(string& str);
+double med(studentas& s, int& ndSk1);
 
 
 int main()
 {
-    int n, sk;
+    int studentSk, ndSk; 
     studentas grupe[10];
     cout << "Iveskite studentu skaiciu: " << endl;
-    cin >> n;
-    while (n <= 0 && isdigit(n) == false)
+    cin >> studentSk;
+    while (studentSk <= 0 || cin.fail())
     {
         cin.clear();
         cout << "Nurodytas skaicius yra netinkamas, iveskite studentu skaiciu didesni uz 0" << endl;
         cin.ignore(256, '\n');
-        cin >> n;
+        cin >> studentSk;
     }
 
     cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
-    cin >> sk; 
-    while (isdigit(sk) == false && (sk < 1 || sk > 10))
+    cin >> ndSk; 
+    while (cin.fail() || ndSk < 1 || ndSk > 10)
     {
         cin.clear();
         cout << "Namu darbu skaicius yra netinkamas, iveskite skaiciu didesni uz 0" << endl;
         cin.ignore(256, '\n');
-        cin >> sk;
+        cin >> ndSk;
     }
  
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < studentSk; i++)
     {
-        pild(grupe[i], sk, i);
+        pild(grupe[i], ndSk, i);
     }
-    cout << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(16) << left << "Galutinis (Vid.)" << endl;
-    cout << "--------------------------------------------------------" << endl;
-    for (int i = 0; i < n; i++)
+    cout << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Vid.)" << left << "Galutinis (Mediana)" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
+    for (int i = 0; i < studentSk; i++)
     {
         spausdinti(grupe[i]);
     }
 
     return 0;
 }
-void pild(studentas& s, int& sk1, int& ii)
+void pild(studentas& s, int& ndSk1, int& ii)
 {
     float sum = 0.;
     cout << "Iveskite " << ii + 1 << " studento varda: " << endl;
@@ -87,10 +91,10 @@ void pild(studentas& s, int& sk1, int& ii)
     }
 
     cout << "Iveskite gautus pazymius is namu darbu (1-10): " << endl;
-    for (int j = 0; j < sk1; j++)
+    for (int j = 0; j < ndSk1; j++)
     {
         cin >> s.nd[j];
-        while ((isdigit(s.nd[j]) == false)&&( s.nd[j] < 1 || s.nd[j] > 10))
+        while (cin.fail() || s.nd[j] < 1 || s.nd[j] > 10)
         {
             cin.clear();
             cout << "Neteisingai ivedete pazymi, prasome dar karta ivesti (1-10)" << endl;
@@ -101,18 +105,19 @@ void pild(studentas& s, int& sk1, int& ii)
     }
     cout << "Iveskite egzamino pazymi (1-10): " << endl;
     cin >> s.egz;
-    while (isdigit(s.egz) == false && (s.egz <= 0 || s.egz > 10))
+    while (cin.fail() || s.egz <= 0 || s.egz > 10)
     {
         cin.clear();
         cout << "Neteisingai ivedete egzamino pazymi, prasome dar karta ivesti (1-10)" << endl;
         cin.ignore(256, '\n');
         cin >> s.egz;
     }
-    s.galutinis = 0.6 * s.egz + 0.4 * (sum / sk1);
+    s.galutinis = 0.6 * s.egz + 0.4 * (sum / ndSk1);
+    s.mediana = med(s, ndSk1);
 }
 void spausdinti(studentas& s)
 {
-    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(16) << left << fixed << setprecision(2) << s.galutinis << endl;
+    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis << fixed << setprecision(2) << s.mediana << endl;
 
 }
 
@@ -123,5 +128,13 @@ bool check_string(string& str)
         if (isdigit(str[i]) == false) sum += 1;
     if (sum == str.length()) return true;
     else return false;
+}
+
+double med(studentas& s, int& ndSk1)
+{
+    sort(s.nd, s.nd + ndSk1);
+    int vid = ndSk1 / 2;
+    if (ndSk1 % 2 == 0) return (double)(s.nd[vid - 1] + s.nd[vid]) / 2.0;
+    else return (double)s.nd[vid];
 }
 
