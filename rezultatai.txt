@@ -1,0 +1,12 @@
+Pavarde             Vardas              Galutinis (Vid.)    
+-------------------------------------------------------------------------
+Antanavicius        Vardas2             6.15                
+Beinoras            Vardas3             5.59                
+Cibule              Vardas4             3.19                
+Dangyras            Vardas5             7.29                
+Gedgaudas           Vardas8             2.89                
+KLaudijusas         Vardas7             7.83                
+Lainedas            Vardas10            4.19                
+Lukauskas           Vardas1             3.88                
+Piekautas           Vardas9             6.89                
+Viktorijus          Vardas6             3.65                
