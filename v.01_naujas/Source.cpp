@@ -25,8 +25,8 @@ struct studentas
     string vardas, pavarde;
     vector <double> nd;
     double egz;
-    double galutinis;
-    double mediana;
+    double galutinis_vidurkis;
+    double galutinis_mediana;
 };
 
 void vardPavard(studentas& s, int& ii);
@@ -40,7 +40,8 @@ void spausdintiMed(studentas& s);
 bool check_string(string& str);
 bool check_alpha(char& chr);
 bool check_a(char& chr);
-double med(studentas& s, int& ndSk1);
+double mediana(studentas& s);
+double vidurkis(studentas& s);
 
 
 int main()
@@ -264,9 +265,11 @@ void pild(studentas& s)
         cin.ignore(256, '\n');
         cin >> s.egz;
     }
-    s.galutinis = 0.6 * s.egz + 0.4 * (sum / s.nd.size());
-    int dydis = s.nd.size();
-    s.mediana = med(s, dydis);
+    double vid = vidurkis(s);
+    s.galutinis_vidurkis = 0.6 * s.egz + 0.4 * vid;
+
+    double med = mediana(s);
+    s.galutinis_mediana = 0.6 * s.egz + 0.4 * med;
 }
 void pildrnd(studentas& s)
 {
@@ -306,24 +309,27 @@ void pildrnd(studentas& s)
     }
     s.egz = rand() % 10 + 1;
     cout << "Egzamino pazymys: " << s.egz << endl;
-    s.galutinis = 0.6 * s.egz + 0.4 * (sum / s.nd.size());
-    int dydis = s.nd.size();
-    s.mediana = med(s, dydis);
+
+    double vid = vidurkis(s);
+    s.galutinis_vidurkis = 0.6 * s.egz + 0.4 * vid;
+
+    double med = mediana(s);
+    s.galutinis_mediana = 0.6 * s.egz + 0.4 * med;
 }
 void spausdintiVid(studentas& s)
 {
-    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis << endl;
+    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis_vidurkis << endl;
 
 }
 
 void spausdintiMed(studentas& s)
 {
-    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.mediana << endl;
+    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis_mediana << endl;
 
 }
 void spausdinti(studentas& s)
 {
-    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis << setw(20) << left << fixed << setprecision(2) << s.mediana << endl;
+    cout << setw(20) << left << s.pavarde << setw(20) << left << s.vardas << setw(20) << left << fixed << setprecision(2) << s.galutinis_vidurkis << setw(20) << left << fixed << setprecision(2) << s.galutinis_mediana << endl;
 }
 
 bool check_string(string& str)
@@ -333,13 +339,6 @@ bool check_string(string& str)
         if (isdigit(str[i]) == false) sum += 1;
     if (sum == str.length()) return true;
     else return false;
-}
-
-double med(studentas& s, int& ndSk1)
-{
-    sort(s.nd.begin(), s.nd.end());
-    if (ndSk1 % 2 == 0) return (double)(s.nd[(ndSk1 / 2) - 1] + s.nd[ndSk1 / 2]) / 2.0;
-    else return (double)s.nd[ndSk1 / 2];
 }
 
 void pildnd(studentas& s, int& ii, int& ndSk1)
@@ -369,8 +368,13 @@ void pildnd(studentas& s, int& ii, int& ndSk1)
         cin.ignore(256, '\n');
         cin >> s.egz;
     }
-    s.galutinis = 0.6 * s.egz + 0.4 * (sum / ndSk1);
-    s.mediana = med(s, ndSk1);
+
+    double vid = vidurkis(s);
+    s.galutinis_vidurkis = 0.6 * s.egz + 0.4 * vid;
+
+    double med = mediana(s);
+    s.galutinis_mediana = 0.6 * s.egz + 0.4 * med;
+
 }
 
 void pildndrnd(studentas& s, int& ii, int& ndSk1)
@@ -387,8 +391,12 @@ void pildndrnd(studentas& s, int& ii, int& ndSk1)
     }
     s.egz = rand() % 10 + 1;
     cout << "Egzamino pazymys: " << s.egz << endl;
-    s.galutinis = 0.6 * s.egz + 0.4 * (sum / ndSk1);
-    s.mediana = med(s, ndSk1);
+
+    double vid = vidurkis(s);
+    s.galutinis_vidurkis = 0.6 * s.egz + 0.4 * vid;
+
+    double med = mediana(s);
+    s.galutinis_mediana = 0.6 * s.egz + 0.4 * med;
 }
 
 bool check_alpha(char& chr)
@@ -402,4 +410,31 @@ bool check_a(char& chr)
     if (chr == 'v' || chr == 'V' || chr == 'm' || chr == 'M' || chr == 'A' || chr == 'a') return true;
     else return false;
 
+}
+
+double mediana(studentas& s)
+{
+    sort(s.nd.begin(), s.nd.end());
+
+    int ndKiek1 = s.nd.size();
+
+    if (ndKiek1 % 2 == 0) return (double)(s.nd[(ndKiek1 / 2) - 1] + s.nd[ndKiek1 / 2]) / 2.0;
+    else return (double)s.nd[ndKiek1 / 2];
+}
+
+double vidurkis(studentas& s)
+{
+    double sum = 0.;
+    double kiekis = 0.;
+    double vid = 0.;
+
+    for (int i = 0; i < s.nd.size(); i++)
+    {
+        sum += s.nd.at(i);
+        kiekis++;
+    }
+
+    vid = sum / kiekis;
+
+    return vid;
 }
