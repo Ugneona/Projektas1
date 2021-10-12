@@ -1,5 +1,4 @@
 # V.02 versijoje:
-* Pataisyta V.01 versija, kad struktūroje būtų saugoma ne galutinis išvestas pažymys su vidurkiu ir mediana, o galutinis išvestas pazymys su vidurkiu ir galutinis išvestas pažymys su mediana;
 * Kiekvienam įvedimui yra naudojamas patikrinimas, ar teisinga įvesta raidė ar skaičius;
 * Klausiama, ar nuskaitysime duomenis iš failo "kursiokai.txt";
 * Jei sutinkame:
