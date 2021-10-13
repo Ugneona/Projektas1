@@ -48,6 +48,7 @@ void spausdinti_vector(char& atsakymas, vector <studentas> grupe1);
 void spausdinti_struct(char& atsakymas, studentas(& grupe)[100], int &studentuSkaicius);
 void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[100]);
 void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100]);
+void failas();
 char uzklausa_delFailo();
 char uzklausa_delAtsakymo();
 char uzklausa_delGeneravimo();
@@ -61,79 +62,12 @@ int main()
     int studentSk;
     studentas grupe[100];
     char ats, klsm;
-    string sLine;
-    int studkiek = 0;
-    int eilSk = 0;
-    vector <studentas> grupe1;
-    studentas stu;
-    int zodziuSk = 0;
-    string word;
-    double temp;
-    double med;
-    double vid;
-
+   
     klsm = uzklausa_delFailo();
 
     if (klsm == 't' || klsm == 'T')
     {
-        ifstream indata("kursiokai.txt");
-
-        if (!indata) {
-            cerr << "Unable to open file datafile.txt";
-            exit(1);
-        }
-
-        ats = uzklausa_delAtsakymo();
-
-        while (true)
-        {
-            if (!indata.eof())
-            {
-                getline(indata, sLine);
-
-                eilSk++;
-
-                if (eilSk == 1)
-                {
-
-                    stringstream s(sLine);
-                    while (s >> word)
-                    {
-                        zodziuSk++;
-                    }
-                }
-
-                indata >> stu.vardas >> stu.pavarde;
-
-                stu.nd.reserve(zodziuSk - 3);
-
-                for (int i = 0; i < zodziuSk - 3; i++)
-                {
-                    indata >> temp;
-                    stu.nd.push_back(temp);
-                }
-                indata >> stu.egz;
-
-                vid = vidurkis(stu);
-                stu.galutinis_vidurkis = 0.4 * vid + 0.6 * stu.egz;
-
-                med = mediana(stu);
-                stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
-
-                grupe1.push_back(stu);
-                stu.nd.clear();
-
-            }
-            else break;
-        }
-        sort(grupe1.begin(), grupe1.end(), [](studentas a, studentas b)
-            {
-                return a.pavarde < b.pavarde;
-            });
-
-        indata.close();
-
-        spausdinti_vector(ats, grupe1);
+        failas();
     }
     else
     {
@@ -635,5 +569,78 @@ void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100])
             grupe[i].galutinis_mediana = 0.6 * grupe[i].egz + 0.4 * med;
         }
     }
+
+}
+
+void failas()
+{
+    char ats;
+    string sLine;
+    int eilSk = 0;
+    vector <studentas> grupe1;
+    studentas stu;
+    int zodziuSk = 0;
+    string word;
+    double temp;
+    double med;
+    double vid;
+    ifstream indata("kursiokai.txt");
+
+    if (!indata) {
+        cerr << "Unable to open file datafile.txt";
+        exit(1);
+    }
+
+    ats = uzklausa_delAtsakymo();
+
+    while (true)
+    {
+        if (!indata.eof())
+        {
+            getline(indata, sLine);
+
+            eilSk++;
+
+            if (eilSk == 1)
+            {
+
+                stringstream s(sLine);
+                while (s >> word)
+                {
+                    zodziuSk++;
+                }
+            }
+
+            indata >> stu.vardas >> stu.pavarde;
+
+            stu.nd.reserve(zodziuSk - 3);
+
+            for (int i = 0; i < zodziuSk - 3; i++)
+            {
+                indata >> temp;
+                stu.nd.push_back(temp);
+            }
+            indata >> stu.egz;
+
+            vid = vidurkis(stu);
+            stu.galutinis_vidurkis = 0.4 * vid + 0.6 * stu.egz;
+
+            med = mediana(stu);
+            stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
+
+            grupe1.push_back(stu);
+            stu.nd.clear();
+
+        }
+        else break;
+    }
+    sort(grupe1.begin(), grupe1.end(), [](studentas a, studentas b)
+        {
+            return a.pavarde < b.pavarde;
+        });
+
+    indata.close();
+
+    spausdinti_vector(ats, grupe1);
 
 }
