@@ -48,11 +48,17 @@ void spausdinti_vector(char& atsakymas, vector <studentas> grupe1);
 void spausdinti_struct(char& atsakymas, studentas(& grupe)[100], int &studentuSkaicius);
 void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[100]);
 void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100]);
-
+char uzklausa_delFailo();
+char uzklausa_delAtsakymo();
+char uzklausa_delGeneravimo();
+char uzklausa_arNdSkaiciusZinomas();
+char uzklausa_arBusDarPazymiu();
+int uzklausa_kiekNdYra();
+int studentuSkaiciausUzklausa();
 
 int main()
 {
-    int studentSk, ndSk;
+    int studentSk;
     studentas grupe[100];
     char ats, klsm;
     string sLine;
@@ -66,15 +72,8 @@ int main()
     double med;
     double vid;
 
-    cout << "Ar duomenis skaitysime is failo? Jei skaitysime is failo, veskite t, jei neskaitysime, veskite n" << endl;
-    cin >> klsm;
-    while (isalpha(klsm) == false || check_alpha(klsm) == false)
-    {
-        cin.clear();
-        cout << "Neatpazintas simbolis. Prasome ivesti t - jei skaitysime duomenis is failo, n - priesingu atveju" << endl;
-        cin.ignore(256, '\n');
-        cin >> klsm;
-    }
+    klsm = uzklausa_delFailo();
+
     if (klsm == 't' || klsm == 'T')
     {
         ifstream indata("kursiokai.txt");
@@ -84,16 +83,7 @@ int main()
             exit(1);
         }
 
-        cout << "Ar noresite matyti atsakyma su vidurkiu ar mediana? Jei su vidurkiu, veskite v, jei su mediana, veskite m, jei abu, veskite a" << endl;
-        cin >> ats;
-
-        while (isalpha(ats) == false || check_vma(ats) == false)
-        {
-            cin.clear();
-            cout << "Neatpazintas simbolis. Jei norite, kad isvestu vidurki veskite v, jei mediana veskite m, jei abu veskite a" << endl;
-            cin.ignore(256, '\n');
-            cin >> ats;
-        }
+        ats = uzklausa_delAtsakymo();
 
         while (true)
         {
@@ -147,54 +137,134 @@ int main()
     }
     else
     {
-        cout << "Ar duomenis vesite pats, ar norite, kad butu sugeneruoti automatiskai? Jei vesite pats veskite t, priesingu atveju veskite n" << endl;
-        cin >> klsm;
-        while (isalpha(klsm) == false || check_alpha(klsm) == false)
-        {
-            cin.clear();
-            cout << "Neatpazintas simbolis. Prasome ivesti t - jei duomenis vesite pats, n - priesingu atveju" << endl;
-            cin.ignore(256, '\n');
-            cin >> klsm;
-        }
+        klsm = uzklausa_delGeneravimo();
+       
         if (klsm == 't' || klsm == 'T')
         {
-            cout << "Iveskite studentu skaiciu: " << endl;
-            cin >> studentSk;
-            while (studentSk <= 0 || cin.fail())
-            {
-                cin.clear();
-                cout << "Nurodytas skaicius yra netinkamas, iveskite studentu skaiciu didesni uz 0" << endl;
-                cin.ignore(256, '\n');
-                cin >> studentSk;
-            }
+            studentSk = studentuSkaiciausUzklausa();
 
             studentoUzpildymasVardPavardNdEgz(studentSk, grupe);
         }
         else {
+            studentSk = studentuSkaiciausUzklausa();
   
-            cout << "Iveskite studentu skaiciu: " << endl;
-            cin >> studentSk;
-            while (studentSk <= 0 || cin.fail())
-            {
-                cin.clear();
-                cout << "Nurodytas skaicius yra netinkamas, iveskite studentu skaiciu didesni uz 0" << endl;
-                cin.ignore(256, '\n');
-                cin >> studentSk;
-            }
             studentoUzpildymasRnd(studentSk, grupe);
         }
-        cout << "Norite, kad skaiciuotu vidurki ar mediana? Jei vidurki veskite v, jei mediana veskite m, jei abu veskite a" << endl;
-        cin >> ats;
-        while (isalpha(ats) == false || check_vma(ats) == false)
-        {
-            cin.clear();
-            cout << "Neatpazintas simbolis. Jei norite, kad isvestu vidurki veskite v, jei mediana veskite m, jei abu veskite a" << endl;
-            cin.ignore(256, '\n');
-            cin >> ats;
-        }
+        ats = uzklausa_delAtsakymo();
+        
         spausdinti_struct(ats, grupe, studentSk);
     }
     return 0;
+}
+
+int studentuSkaiciausUzklausa()
+{
+    int studentSk;
+
+    cout << "Iveskite studentu skaiciu: " << endl;
+    cin >> studentSk;
+
+    while (studentSk <= 0 || cin.fail())
+    {
+        cin.clear();
+        cout << "Nurodytas skaicius yra netinkamas, iveskite studentu skaiciu didesni uz 0" << endl;
+        cin.ignore(256, '\n');
+        cin >> studentSk;
+    }
+
+    return studentSk;
+}
+
+char uzklausa_arNdSkaiciusZinomas()
+{
+    char ats;
+    cout << "Ar namu darbu skaicius yra zinomas is anksto? t- jei taip, n- jei ne" << endl;
+    cin >> ats;
+    while (isalpha(ats) == false || check_alpha(ats) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu skaicius zinomas, n - jei namu darbu skaicius nezinomas" << endl;
+        cin.ignore(256, '\n');
+        cin >> ats;
+    }
+    return ats;
+}
+
+int uzklausa_kiekNdYra()
+{
+    int ndSkaicius;
+    cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
+    cin >> ndSkaicius;
+    while (cin.fail() || ndSkaicius < 1 || ndSkaicius > 10)
+    {
+        cin.clear();
+        cout << "Namu darbu skaicius yra netinkamas, iveskite skaiciu didesni uz 0" << endl;
+        cin.ignore(256, '\n');
+        cin >> ndSkaicius;
+    }
+    return ndSkaicius;
+}
+
+char uzklausa_arBusDarPazymiu()
+{
+    char ats;
+    cout << "Ar dar bus pazymiu is namu darbu? t - jei bus dar, n - jei nebebus" << endl;
+    cin >> ats;
+
+    while (isalpha(ats) == false || check_alpha(ats) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu dar bus n - jei namu darbu nebebus" << endl;
+        cin.ignore(256, '\n');
+        cin >> ats;
+    }
+    return ats;
+}
+
+char uzklausa_delFailo()
+{
+    char klsm;
+    cout << "Ar duomenis skaitysime is failo? Jei skaitysime is failo, veskite t, jei neskaitysime, veskite n" << endl;
+    cin >> klsm;
+    while (isalpha(klsm) == false || check_alpha(klsm) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Prasome ivesti t - jei skaitysime duomenis is failo, n - priesingu atveju" << endl;
+        cin.ignore(256, '\n');
+        cin >> klsm;
+    }
+    return klsm;
+}
+
+char uzklausa_delAtsakymo()
+{
+    char ats;
+    cout << "Ar noresite matyti atsakyma su vidurkiu ar mediana? Jei su vidurkiu, veskite v, jei su mediana, veskite m, jei abu, veskite a" << endl;
+    cin >> ats;
+
+    while (isalpha(ats) == false || check_vma(ats) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Jei norite, kad isvestu vidurki veskite v, jei mediana veskite m, jei abu veskite a" << endl;
+        cin.ignore(256, '\n');
+        cin >> ats;
+    }
+    return ats;
+}
+
+char uzklausa_delGeneravimo()
+{
+    char klsm;
+    cout << "Ar duomenis vesite pats, ar norite, kad butu sugeneruoti automatiskai? Jei vesite pats veskite t, priesingu atveju veskite n" << endl;
+    cin >> klsm;
+    while (isalpha(klsm) == false || check_alpha(klsm) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Prasome ivesti t - jei duomenis vesite pats, n - priesingu atveju" << endl;
+        cin.ignore(256, '\n');
+        cin >> klsm;
+    }
+    return klsm;
 }
 
 bool check_string(string& str)
@@ -324,26 +394,13 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
     char ats;
     int ndSkaicius;
     double pazymys;
-    cout << "Ar namu darbu skaicius yra zinomas is anksto? t- jei taip, n- jei ne" << endl;
-    cin >> ats;
-    while (isalpha(ats) == false || check_alpha(ats) == false)
-    {
-        cin.clear();
-        cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu skaicius zinomas, n - jei namu darbu skaicius nezinomas" << endl;
-        cin.ignore(256, '\n');
-        cin >> ats;
-    }
+
+    ats = uzklausa_arNdSkaiciusZinomas();
+    
     if (ats == 't' || ats == 'T')
     {
-        cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
-        cin >> ndSkaicius;
-        while (cin.fail() || ndSkaicius < 1 || ndSkaicius > 10)
-        {
-            cin.clear();
-            cout << "Namu darbu skaicius yra netinkamas, iveskite skaiciu didesni uz 0" << endl;
-            cin.ignore(256, '\n');
-            cin >> ndSkaicius;
-        }
+        ndSkaicius = uzklausa_kiekNdYra();
+       
         for (int i = 0; i < studentuSkaicius; i++)
         {
             cout << "Iveskite " << i + 1 << " studento varda: " << endl;
@@ -432,18 +489,8 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
             }
             grupe[i].nd.push_back(pazymys);
 
-
-            cout << "Ar dar bus pazymiu is namu darbu? t - jei bus dar, n - jei nebebus" << endl;
-            cin >> ats;
-
-            while (isalpha(ats) == false || check_alpha(ats) == false)
-            {
-                cin.clear();
-                cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu dar bus n - jei namu darbu nebebus" << endl;
-                cin.ignore(256, '\n');
-                cin >> ats;
-            }
-
+            ats = uzklausa_arBusDarPazymiu();
+            
             while (ats == 'T' || ats == 't')
             {
                 cout << "Iveskite sekanti pazymi is namu darbu" << endl;
@@ -457,15 +504,8 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
                 }
                 grupe[i].nd.push_back(pazymys);
 
-                cout << "Ar dar bus pazymiu is namu darbu? t - jei bus dar, n - jei nebebus" << endl;
-                cin >> ats;
-                while (isalpha(ats) == false || check_alpha(ats) == false)
-                {
-                    cin.clear();
-                    cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu dar bus n - jei namu darbu nebebus" << endl;
-                    cin.ignore(256, '\n');
-                    cin >> ats;
-                }
+                ats = uzklausa_arBusDarPazymiu();
+                
             }
 
             cout << "Iveskite egzamino pazymi (1-10): " << endl;
@@ -493,26 +533,12 @@ void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100])
     int ndSkaicius;          
     double paz;
 
-    cout << "Ar namu darbu skaicius yra zinomas is anksto? t- jei taip, n- jei ne" << endl;
-    cin >> atsakymas;
-    while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)
-    {
-        cin.clear();
-        cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu skaicius zinomas, n - jei namu darbu skaicius nezinomas" << endl;
-        cin.ignore(256, '\n');
-        cin >> atsakymas;
-    }
+    atsakymas = uzklausa_arNdSkaiciusZinomas();
+    
     if (atsakymas == 't' || atsakymas == 'T')
     {
-        cout << "Iveskite, kiek bus namu darbu (1-10)" << endl;
-        cin >> ndSkaicius;
-        while (cin.fail() || ndSkaicius < 1 || ndSkaicius > 10)
-        {
-            cin.clear();
-            cout << "Namu darbu skaicius yra netinkamas, iveskite skaiciu didesni uz 0" << endl;
-            cin.ignore(256, '\n');
-            cin >> ndSkaicius;
-        }
+        ndSkaicius = uzklausa_kiekNdYra();
+     
         for (int i = 0; i < studentuSkaicius; i++)
         {
             cout << "Iveskite " << i + 1 << " studento varda: " << endl;
@@ -586,16 +612,8 @@ void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100])
             cout << "Pazymys is namu darbu: " << paz << endl;
             grupe[i].nd.push_back(paz);
 
-            cout << "Ar dar bus pazymiu is namu darbu? t - jei bus dar, n - jei nebebus" << endl;
-            cin >> atsakymas;
-
-            while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)
-            {
-                cin.clear();
-                cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu dar bus n - jei namu darbu nebebus" << endl;
-                cin.ignore(256, '\n');
-                cin >> atsakymas;
-            }
+            atsakymas = uzklausa_arBusDarPazymiu();
+           
 
             while (atsakymas == 'T' || atsakymas == 't')
             {
@@ -603,17 +621,7 @@ void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100])
 
                 cout << "Pazymys is namu darbu: " << paz << endl;
                 grupe[i].nd.push_back(paz);
-
-                cout << "Ar dar bus pazymiu is namu darbu? t - jei bus dar, n - jei nebebus" << endl;
-                cin >> atsakymas;
-
-                while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)
-                {
-                    cin.clear();
-                    cout << "Neatpazintas simbolis. Prasome ivesti t - jei namu darbu dar bus n - jei namu darbu nebebus" << endl;
-                    cin.ignore(256, '\n');
-                    cin >> atsakymas;
-                }
+                atsakymas = uzklausa_arBusDarPazymiu();
             }
 
             grupe[i].egz = rand() % 10 + 1;
