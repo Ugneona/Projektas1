@@ -24,7 +24,11 @@
 100000 studentu failo nuskaitymas truko: 8.38677 s;<br/>
 100000 studentu surusiavimas i dvi grupes truko: 38.1994 s;<br/>
 100000 protingu studentu surasymas i failo truko: 3.55619 s;<br/>
-100000 tinginiu studentu surasymas i failo truko: 2.4512 s*.<br/>
+100000 tinginiu studentu surasymas i failo truko: 2.4512 s;<br/>
+1000000 studentu failo nuskaitymas truko: 88.775 s;<br/>
+1000000 studentu surusiavimas i dvi grupes truko: 351.125 s;<br/>
+1000000 protingu studentu surasymas i failo truko: 35.3741 s;<br/>
+1000000 tinginiu studentu surasymas i failo truko: 24.6771 s.*<br/>
 * Jei nesutinkame vykdome numatytus veiksmus iš programos V.02. 
 
 
