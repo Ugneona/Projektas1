@@ -79,7 +79,7 @@ int main()
 
         namuDarbuSkaicius = uzklausa_kiekNdYra();
 
-        cout << "Atsakyma norite matyti apskaiciuota su vidurkiu, veskite t, jei su mediana veskite n" << endl;
+        cout << "Ar atsakyma noresite gauti su vidurkiu? Jei taip, veskite t, jei ne, vesikite n" << endl;
         cin >> ats;
 
         while (isalpha(ats) == false || check_alpha(ats) == false)
@@ -748,13 +748,17 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
     vector <studentas> protingi;
     vector <studentas> tinginiai;
     vector <studentas> grupe1;
-    laikas.reserve(4);
 
     for (int i = 0; i < (v1.size()-1); i++)
     {
-        failoNuskaitymas(grupe1, v1.at(i), laikas, ndKiek);
         laikas.reserve(4);
 
+        auto start = std::chrono::high_resolution_clock::now();
+        failoNuskaitymas(grupe1, v1.at(i), laikas, ndKiek);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> diff = end - start;
+        laikas.push_back(diff.count());
+       
         rusiavimas(grupe1, protingi, tinginiai, laikas, atsakymas);
 
         spausdinimas_protingi(v1.at(i), atsakymas, protingi, laikas);
@@ -778,7 +782,7 @@ void failoNuskaitymas(vector <studentas> &grupe1, int& v1, vector <double> &laik
 {
     studentas stu;
     double temp;
-    auto start = std::chrono::high_resolution_clock::now();
+
     string failoPav = "Studentai " + to_string(v1) + ".txt";
     ifstream nuskaitymas(failoPav);
 
@@ -816,10 +820,7 @@ void failoNuskaitymas(vector <studentas> &grupe1, int& v1, vector <double> &laik
         }
         else break;
     }
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> diff = end - start;
 
-    laikas.push_back(diff.count());
 }
 
 void rusiavimas(vector <studentas> &grupe1, vector <studentas> &protingi, vector <studentas> &tinginiai, vector <double> &laikas, char &atsakymas)
