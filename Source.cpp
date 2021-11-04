@@ -95,7 +95,7 @@ int main()
         failuKurimas(v, namuDarbuSkaicius);
 
         cout << "\n";
-
+ 
         darbasSuFailu(v, namuDarbuSkaicius, ats);
     }
     else
@@ -132,7 +132,7 @@ int main()
 char uzklausa_delFailuKurimu()
 {
     char atsakymas;
-    cout << "Jei norite sugeneruoti 5 naujus failus su atsitiktiniais studentais, veskite t? Jei skaityti is failo ar paciam suvedineti duomenis, veskite n" << endl;
+    cout << "Ar norite sugeneruoti 5 naujus failus su duomenimis apie studentus? T - jei norite, n - jei nenorite" << endl;
     cin >> atsakymas;
 
     while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)
@@ -741,7 +741,7 @@ void failuKurimas(vector <int> &v1, int& ndKiek)
     }
 }
 
-void darbasSuFailu(vector <int> &v1, int& ndKiek, char& atsakymas)
+void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
 {
     string failoPav;
     vector <double> laikas;
@@ -792,26 +792,27 @@ void failoNuskaitymas(vector <studentas> &grupe1, int& v1, vector <double> &laik
     {
         if (!nuskaitymas.eof())
         {
-            nuskaitymas >> stu.vardas >> stu.pavarde;
 
-            stu.nd.reserve(ndKiek);
+                nuskaitymas >> stu.vardas >> stu.pavarde;
 
-            for (int k = 0; k < ndKiek; k++)
-            {
-                nuskaitymas >> temp;
-                stu.nd.push_back(temp);
-            }
+                stu.nd.reserve(ndKiek);
 
-            nuskaitymas >> stu.egz;
+                for (int k = 0; k < ndKiek; k++)
+                {
+                    nuskaitymas >> temp;
+                    stu.nd.push_back(temp);
+                }
 
-            double vid = vidurkis(stu);
-            stu.galutinis_vidurkis = 0.4 * vid + 0.6 * stu.egz;
+                nuskaitymas >> stu.egz;
 
-            double med = mediana(stu);
-            stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
+                double vid = vidurkis(stu);
+                stu.galutinis_vidurkis = 0.4 * vid + 0.6 * stu.egz;
 
-            grupe1.push_back(stu);
-            stu.nd.clear();
+                double med = mediana(stu);
+                stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
+
+                grupe1.push_back(stu);
+                stu.nd.clear();
         }
         else break;
     }
@@ -831,13 +832,13 @@ void rusiavimas(vector <studentas> &grupe1, vector <studentas> &protingi, vector
                 return a.galutinis_vidurkis < b.galutinis_vidurkis;
             }));
 
-        for (int j = 0; j < grupe1.size(); j++)
+        for (const auto& stu:grupe1)
         {
-            if (grupe1.at(j).galutinis_vidurkis >= 5.00)
+            if (stu.galutinis_vidurkis >= 5.00)
             {
-                protingi.push_back(grupe1.at(j));
+                protingi.push_back(stu);
             }
-            else tinginiai.push_back(grupe1.at(j));
+            else tinginiai.push_back(stu);
         }
 
         auto end = std::chrono::high_resolution_clock::now();
@@ -854,15 +855,14 @@ void rusiavimas(vector <studentas> &grupe1, vector <studentas> &protingi, vector
             }));
 
 
-        for (int j = 0; j < grupe1.size(); j++)
+        for (const auto& stu:grupe1)
         {
-            if (grupe1.at(j).galutinis_mediana >= 5.00)
+            if (stu.galutinis_mediana >= 5.00)
             {
-                protingi.push_back(grupe1.at(j));
+                protingi.push_back(stu);
             }
-            else tinginiai.push_back(grupe1.at(j));
+            else tinginiai.push_back(stu);
         }
-
 
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
@@ -881,9 +881,9 @@ void spausdinimas_protingi(int& v1, char& atsakymas, vector <studentas> &proting
         rz << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Vid.)" << endl;
         rz << "-------------------------------------------------------------------------" << endl;
 
-        for (int ii = 0; ii < protingi.size(); ii++)
+        for (const auto& stu: protingi)
         {
-            rz << setw(20) << left << protingi.at(ii).pavarde << setw(20) << left << protingi.at(ii).vardas << setw(20) << left << fixed << setprecision(2) << protingi.at(ii).galutinis_vidurkis << endl;
+            rz << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_vidurkis << endl;
         }
 
     }
@@ -892,9 +892,9 @@ void spausdinimas_protingi(int& v1, char& atsakymas, vector <studentas> &proting
         rz << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Med.)" << endl;
         rz << "-------------------------------------------------------------------------" << endl;
 
-        for (int ii = 0; ii < protingi.size(); ii++)
+        for (const auto& stu : protingi)
         {
-            rz << setw(20) << left << protingi.at(ii).pavarde << setw(20) << left << protingi.at(ii).vardas << setw(20) << left << fixed << setprecision(2) << protingi.at(ii).galutinis_mediana << endl;
+            rz << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_mediana << endl;
         }
 
     }
@@ -917,9 +917,9 @@ void spausdinimas_tinginiai(int& v1, char& atsakymas, vector <studentas>& tingin
         rez << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Vid.)" << endl;
         rez << "-------------------------------------------------------------------------" << endl;
 
-        for (int ii = 0; ii < tinginiai.size(); ii++)
+        for (const auto& stu : tinginiai)
         {
-            rez << setw(20) << left << tinginiai.at(ii).pavarde << setw(20) << left << tinginiai.at(ii).vardas << setw(20) << left << fixed << setprecision(2) << tinginiai.at(ii).galutinis_vidurkis << endl;
+            rez << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_vidurkis << endl;
         }
 
     }
@@ -928,9 +928,9 @@ void spausdinimas_tinginiai(int& v1, char& atsakymas, vector <studentas>& tingin
         rez << setw(20) << left << "Pavarde" << setw(20) << left << "Vardas" << setw(20) << left << "Galutinis (Med.)" << endl;
         rez << "-------------------------------------------------------------------------" << endl;
 
-        for (int ii = 0; ii < tinginiai.size(); ii++)
+        for (const auto& stu : tinginiai)
         {
-            rez << setw(20) << left << tinginiai.at(ii).pavarde << setw(20) << left << tinginiai.at(ii).vardas << setw(20) << left << fixed << setprecision(2) << tinginiai.at(ii).galutinis_mediana << endl;
+            rez << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_mediana << endl;
         }
 
     }
@@ -941,5 +941,4 @@ void spausdinimas_tinginiai(int& v1, char& atsakymas, vector <studentas>& tingin
     std::chrono::duration<double> diff = end - start;
 
     laikas.push_back(diff.count());
-
 }
