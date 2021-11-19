@@ -127,7 +127,9 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
     vector <studentas> tinginiai_vector_1;
     vector <studentas> tinginiai_vector_2;
     vector <studentas> grupe_vector;
+    vector <studentas> grupe_vector_2;
     list <studentas> grupe_list;
+    list <studentas> grupe_list_2;
     list <studentas> protingi_list;
     list <studentas> tinginiai_list_1;
     list <studentas> tinginiai_list_2;
@@ -143,17 +145,11 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
         laikas_vector.reserve(2);
         laikas_list.reserve(2);
 
-        failoNuskaitymas(grupe_vector, v1.at(i), ndKiek);
-        failoNuskaitymas_list(grupe_list, v1.at(i), ndKiek);
+        failoNuskaitymas(grupe_vector, grupe_vector_2, v1.at(i), ndKiek);
+        failoNuskaitymas_list(grupe_list, grupe_list_2, v1.at(i), ndKiek);
 
         rusiavimas_strategija1(grupe_vector, grupe_list, protingi_vector, tinginiai_vector_1, protingi_list, tinginiai_list_1, laikas_vector, laikas_list, atsakymas);
-        rusiavimas_strategija2(grupe_vector, grupe_list, tinginiai_vector_2, tinginiai_list_2, laikas_vector, laikas_list, atsakymas);
-
-        spausdinimas(v1.at(i), atsakymas, protingi_vector, pavP);
-        spausdinimas(v1.at(i), atsakymas, tinginiai_vector_1, pavT);
-
-        spausdinimas(v1.at(i), atsakymas, protingi_list, pavP);
-        spausdinimas(v1.at(i), atsakymas, tinginiai_list_1, pavT);
+        rusiavimas_strategija2(grupe_vector_2, grupe_list_2, tinginiai_vector_2, tinginiai_list_2, laikas_vector, laikas_list, atsakymas);
 
         int vieta = 40 - i;
 
@@ -163,6 +159,12 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
         cout << "---------------------------------------------------------------------------------------------" << endl;
         cout << "---------------------------------------------------------------------------------------------" << endl;
 
+        spausdinimas(v1.at(i), atsakymas, protingi_vector, pavP);
+        spausdinimas(v1.at(i), atsakymas, tinginiai_vector_1, pavT);
+
+        spausdinimas(v1.at(i), atsakymas, protingi_list, pavP);
+        spausdinimas(v1.at(i), atsakymas, tinginiai_list_1, pavT);
+
         grupe_list.clear();
         grupe_vector.clear();
         laikas_vector.clear();
@@ -170,7 +172,7 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
     }
 }
 
-void failoNuskaitymas_list(list <studentas>& grupe1, int& v1, int& ndKiek)
+void failoNuskaitymas_list(list <studentas>& grupe1, list <studentas>& grupe2, int& v1, int& ndKiek)
 {
     double temp;
     int i = 0;
@@ -209,12 +211,13 @@ void failoNuskaitymas_list(list <studentas>& grupe1, int& v1, int& ndKiek)
         stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
 
         grupe1.push_back(stu);
+        grupe2.push_back(stu);
         stu.nd.clear();
         i++;
     }
     nuskaitymas.close();
 }
-void failoNuskaitymas(vector <studentas>& grupe1, int& v1, int& ndKiek)
+void failoNuskaitymas(vector <studentas>& grupe1, vector <studentas>& grupe2, int& v1, int& ndKiek)
 {
     double temp;
     int i = 0;
@@ -252,6 +255,7 @@ void failoNuskaitymas(vector <studentas>& grupe1, int& v1, int& ndKiek)
         stu.galutinis_mediana = 0.4 * med + 0.6 * stu.egz;
 
         grupe1.push_back(stu);
+        grupe2.push_back(stu);
         stu.nd.clear();
         i++;
     }
