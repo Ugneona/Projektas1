@@ -1,38 +1,45 @@
 #include "Uzpildymas.h"
 
-void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[100])
+void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, vector <studentas>& grupe)
 {
     char ats;
     int ndSkaicius;
     double pazymys;
+    studentas stu;
 
     ats = uzklausa_arNdSkaiciusZinomas();
+    cout << "\n";
 
     if (ats == 't' || ats == 'T')
     {
         ndSkaicius = uzklausa_kiekNdYra();
+        cout << "\n";
 
         for (int i = 0; i < studentuSkaicius; i++)
         {
             cout << "Iveskite " << i + 1 << " studento varda: " << endl;
-            cin >> grupe[i].vardas;
-            while (check_string(grupe[i].vardas) == false)
+            cin >> stu.vardas;
+            while (check_string(stu.vardas) == false)
             {
                 cin.clear();
                 cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].vardas;
+                cin >> stu.vardas;
             }
 
+            cout << "\n";
+
             cout << "Dabar iveskite pavarde: " << endl;
-            cin >> grupe[i].pavarde;
-            while (check_string(grupe[i].pavarde) == false)
+            cin >> stu.pavarde;
+            while (check_string(stu.pavarde) == false)
             {
                 cin.clear();
                 cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].pavarde;
+                cin >> stu.pavarde;
             }
+
+            cout << "\n";
 
             cout << "Iveskite gautus pazymius is namu darbu (1-10): " << endl;
             for (int j = 0; j < ndSkaicius; j++)
@@ -45,23 +52,29 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
                     cin.ignore(256, '\n');
                     cin >> pazymys;
                 }
-                grupe[i].nd.push_back(pazymys);
+                stu.nd.push_back(pazymys);
             }
 
+            cout << "\n";
+
             cout << "Iveskite egzamino pazymi (1-10): " << endl;
-            cin >> grupe[i].egz;
-            while (cin.fail() || grupe[i].egz <= 0 || grupe[i].egz > 10)
+            cin >> stu.egz;
+
+            while (cin.fail() || stu.egz <= 0 || stu.egz > 10)
             {
                 cin.clear();
                 cout << "Neteisingai ivedete egzamino pazymi, prasome dar karta ivesti (1-10)" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].egz;
+                cin >> stu.egz;
             }
-            double vid = vidurkis(grupe[i]);
-            grupe[i].galutinis_vidurkis = 0.6 * grupe[i].egz + 0.4 * vid;
+            double vid = vidurkis(stu);
+            stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
 
-            double med = mediana(grupe[i]);
-            grupe[i].galutinis_mediana = 0.6 * grupe[i].egz + 0.4 * med;
+            double med = mediana(stu);
+            stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
+
+            grupe.push_back(stu);
+            stu.nd.clear();
 
         }
     }
@@ -70,24 +83,26 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
         for (int i = 0; i < studentuSkaicius; i++)
         {
             cout << "Iveskite " << i + 1 << " studento varda: " << endl;
-            cin >> grupe[i].vardas;
-            while (check_string(grupe[i].vardas) == false)
+            cin >> stu.vardas;
+            while (check_string(stu.vardas) == false)
             {
                 cin.clear();
                 cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].vardas;
+                cin >> stu.vardas;
             }
+            cout << "\n";
 
             cout << "Dabar iveskite pavarde: " << endl;
-            cin >> grupe[i].pavarde;
-            while (check_string(grupe[i].pavarde) == false)
+            cin >> stu.pavarde;
+            while (check_string(stu.pavarde) == false)
             {
                 cin.clear();
                 cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].pavarde;
+                cin >> stu.pavarde;
             }
+            cout << "\n";
 
             cout << "Iveskite gautus pazymius is namu darbu (1-10): " << endl;
             cin >> pazymys;
@@ -98,9 +113,11 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
                 cin.ignore(256, '\n');
                 cin >> pazymys;
             }
-            grupe[i].nd.push_back(pazymys);
+            stu.nd.push_back(pazymys);
+            cout << "\n";
 
             ats = uzklausa_arBusDarPazymiu();
+            cout << "\n";
 
             while (ats == 'T' || ats == 't')
             {
@@ -113,138 +130,159 @@ void studentoUzpildymasVardPavardNdEgz(int& studentuSkaicius, studentas(&grupe)[
                     cin.ignore(256, '\n');
                     cin >> pazymys;
                 }
-                grupe[i].nd.push_back(pazymys);
+                stu.nd.push_back(pazymys);
+
+                cout << "\n";
 
                 ats = uzklausa_arBusDarPazymiu();
 
+                cout << "\n";
             }
 
             cout << "Iveskite egzamino pazymi (1-10): " << endl;
-            cin >> grupe[i].egz;
-            while (cin.fail() || grupe[i].egz <= 0 || grupe[i].egz > 10)
+            cin >> stu.egz;
+            while (cin.fail() || stu.egz <= 0 || stu.egz > 10)
             {
                 cin.clear();
                 cout << "Neteisingai ivedete egzamino pazymi, prasome dar karta ivesti (1-10)" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].egz;
+                cin >> stu.egz;
             }
 
-            double vid = vidurkis(grupe[i]);
-            grupe[i].galutinis_vidurkis = 0.6 * grupe[i].egz + 0.4 * vid;
+            double vid = vidurkis(stu);
+            stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
 
-            double med = mediana(grupe[i]);
-            grupe[i].galutinis_mediana = 0.6 * grupe[i].egz + 0.4 * med;
+            double med = mediana(stu);
+            stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
+
+            grupe.push_back(stu);
+            stu.nd.clear();
         }
     }
 }
 
-void studentoUzpildymasRnd(int& studentuSkaicius, studentas(&grupe)[100])
+void studentoUzpildymasRnd(int& studentuSkaicius, vector <studentas>& grupe)
 {
     char atsakymas;
     int ndSkaicius;
     double paz;
+    studentas stu;
 
     atsakymas = uzklausa_arNdSkaiciusZinomas();
+    cout << "\n";
 
     if (atsakymas == 't' || atsakymas == 'T')
     {
         ndSkaicius = uzklausa_kiekNdYra();
+        cout << "\n";
 
         for (int i = 0; i < studentuSkaicius; i++)
         {
             cout << "Iveskite " << i + 1 << " studento varda: " << endl;
-            cin >> grupe[i].vardas;
-            while (check_string(grupe[i].vardas) == false)
+            cin >> stu.vardas;
+            while (check_string(stu.vardas) == false)
             {
                 cin.clear();
                 cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].vardas;
+                cin >> stu.vardas;
             }
-
+            cout << "\n";
             cout << "Dabar iveskite pavarde: " << endl;
-            cin >> grupe[i].pavarde;
-            while (check_string(grupe[i].pavarde) == false)
+            cin >> stu.pavarde;
+            while (check_string(stu.pavarde) == false)
             {
                 cin.clear();
                 cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
                 cin.ignore(256, '\n');
-                cin >> grupe[i].pavarde;
+                cin >> stu.pavarde;
             }
 
+            cout << "\n";
             srand(time(NULL));
 
             for (int j = 0; j < ndSkaicius; j++)
             {
                 paz = rand() % 10 + 1;
                 cout << j + 1 << " pazymys: " << paz << endl;
-                grupe[i].nd.push_back(paz);
+                stu.nd.push_back(paz);
             }
 
-            grupe[i].egz = rand() % 10 + 1;
+            stu.egz = rand() % 10 + 1;
 
-            cout << "Egzamino pazymys: " << grupe[i].egz << endl;
+            cout << "Egzamino pazymys: " << stu.egz << endl;
+            cout << "\n";
 
-            double vid = vidurkis(grupe[i]);
-            grupe[i].galutinis_vidurkis = 0.6 * grupe[i].egz + 0.4 * vid;
+            double vid = vidurkis(stu);
+            stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
 
-            double med = mediana(grupe[i]);
-            grupe[i].galutinis_mediana = 0.6 * grupe[i].egz + 0.4 * med;
+            double med = mediana(stu);
+            stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
 
+            grupe.push_back(stu);
+            stu.nd.clear();
         }
     }
     else {
-        for (int i = 0; i < studentuSkaicius; i++)
+    for (int i = 0; i < studentuSkaicius; i++)
+    {
+        cout << "Iveskite " << i + 1 << " studento varda: " << endl;
+        cin >> stu.vardas;
+        while (check_string(stu.vardas) == false)
         {
-            cout << "Iveskite " << i + 1 << " studento varda: " << endl;
-            cin >> grupe[i].vardas;
-            while (check_string(grupe[i].vardas) == false)
-            {
-                cin.clear();
-                cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
-                cin.ignore(256, '\n');
-                cin >> grupe[i].vardas;
-            }
+            cin.clear();
+            cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
+            cin.ignore(256, '\n');
+            cin >> stu.vardas;
+        }
+        cout << "\n";
 
-            cout << "Dabar iveskite pavarde: " << endl;
-            cin >> grupe[i].pavarde;
-            while (check_string(grupe[i].pavarde) == false)
-            {
-                cin.clear();
-                cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
-                cin.ignore(256, '\n');
-                cin >> grupe[i].pavarde;
-            }
+        cout << "Dabar iveskite pavarde: " << endl;
+        cin >> stu.pavarde;
+        while (check_string(stu.pavarde) == false)
+        {
+            cin.clear();
+            cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
+            cin.ignore(256, '\n');
+            cin >> stu.pavarde;
+        }
+        cout << "\n";
 
-            srand(time(NULL));
+        srand(time(NULL));
 
+        paz = rand() % 10 + 1;
+
+        cout << "Pazymys is namu darbu: " << paz << endl;
+        stu.nd.push_back(paz);
+        cout << "\n";
+
+        atsakymas = uzklausa_arBusDarPazymiu();
+        cout << "\n";
+
+        while (atsakymas == 'T' || atsakymas == 't')
+        {
             paz = rand() % 10 + 1;
 
             cout << "Pazymys is namu darbu: " << paz << endl;
-            grupe[i].nd.push_back(paz);
-
+            stu.nd.push_back(paz);
+            cout << "\n";
             atsakymas = uzklausa_arBusDarPazymiu();
-
-
-            while (atsakymas == 'T' || atsakymas == 't')
-            {
-                paz = rand() % 10 + 1;
-
-                cout << "Pazymys is namu darbu: " << paz << endl;
-                grupe[i].nd.push_back(paz);
-                atsakymas = uzklausa_arBusDarPazymiu();
-            }
-
-            grupe[i].egz = rand() % 10 + 1;
-
-            cout << "Egzamino pazymys: " << grupe[i].egz << endl;
-
-            double vid = vidurkis(grupe[i]);
-            grupe[i].galutinis_vidurkis = 0.6 * grupe[i].egz + 0.4 * vid;
-
-            double med = mediana(grupe[i]);
-            grupe[i].galutinis_mediana = 0.6 * grupe[i].egz + 0.4 * med;
+            cout << "\n";
         }
-    }
 
+        stu.egz = rand() % 10 + 1;
+
+        cout << "Egzamino pazymys: " << stu.egz << endl;
+        cout << "\n";
+
+        double vid = vidurkis(stu);
+        stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
+
+        double med = mediana(stu);
+        stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
+
+        grupe.push_back(stu);
+        stu.nd.clear();
+    }
+    }
 }

@@ -1,9 +1,26 @@
 #include "Uzklausos.h"
 
-char uzklausa_delFailuKurimu()
+char uzklausa_delFailuDarbo()
 {
     char atsakymas;
-    cout << "Ar norite sugeneruoti 5 naujus failus su duomenimis apie studentus? T - jei norite, n - jei nenorite" << endl;
+    cout << "Ar dirbsime su failais ir atliksime greicio tyrima? T - jei taip, n - jei neatliksime greicio tyrimo" << endl;
+    cin >> atsakymas;
+
+    while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)
+    {
+        cin.clear();
+        cout << "Neatpazintas simbolis. Prasome ivesti t - jei jai atliksime tyrima, n - priesingu atveju" << endl;
+        cin.ignore(256, '\n');
+        cin >> atsakymas;
+    }
+    return atsakymas;
+    
+}
+
+char uzklausa_delFailuGeneravimo()
+{
+    char atsakymas;
+    cout << "Ar norite sugeneruoti 5 naujus failus su duomenimis apie studentus? T - jei norite, n - jei nenorite dirbti jau su sugeneruotais" << endl;
     cin >> atsakymas;
 
     while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)

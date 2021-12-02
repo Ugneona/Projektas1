@@ -8,31 +8,51 @@
 int main()
 {
     int studentSk;
-    studentas grupe[100];
-    char ats, klsm;
+    vector <studentas> grupe;
+    char ats, klsm, klsm_nr2;
 
-    klsm = uzklausa_delFailuKurimu();
+    klsm = uzklausa_delFailuDarbo();
+    cout << "\n";
 
     if (klsm == 't' || klsm == 'T')
     {
-        int namuDarbuSkaicius;
+        klsm_nr2 = uzklausa_delFailuGeneravimo();
+        cout << "\n";
+
         vector <int> v = { 1000, 10000, 100000, 1000000, 10000000 };
 
-        namuDarbuSkaicius = uzklausa_kiekNdYra();
+        if (klsm_nr2 == 't' || klsm_nr2 == 'T')
+        {
+            int namuDarbuSkaicius;
 
-        ats = Uzklausa_Ats();
+            namuDarbuSkaicius = uzklausa_kiekNdYra();
+            cout << "\n";
 
-        cout << "\n";
+            ats = Uzklausa_Ats();
 
-        failuKurimas(v, namuDarbuSkaicius);
+            cout << "\n";
 
-        cout << "\n";
+            failuKurimas(v, namuDarbuSkaicius);
 
-        darbasSuFailu(v, namuDarbuSkaicius, ats);
+            cout << "\n";
+
+            darbasSuFailu_nr1(v, ats);
+
+        }
+        else
+        {
+            ats = Uzklausa_Ats();
+
+            cout << "\n";
+
+            darbasSuFailu(v, ats);
+
+        }
     }
     else
     {
         klsm = uzklausa_delFailo();
+        cout << "\n";
 
         if (klsm == 't' || klsm == 'T')
         {
@@ -41,21 +61,29 @@ int main()
         else
         {
             klsm = uzklausa_delGeneravimo();
+            cout << "\n";
 
             if (klsm == 't' || klsm == 'T')
             {
                 studentSk = studentuSkaiciausUzklausa();
+                cout << "\n";
 
                 studentoUzpildymasVardPavardNdEgz(studentSk, grupe);
             }
             else {
                 studentSk = studentuSkaiciausUzklausa();
+                cout << "\n";
 
                 studentoUzpildymasRnd(studentSk, grupe);
             }
+
+            cout << "\n";
+
             ats = uzklausa_delAtsakymo();
 
-            spausdinti_struct(ats, grupe, studentSk);
+            cout << "\n";
+
+            spausdinti_vector_nr2(ats, grupe);
         }
     }
     return 0;
