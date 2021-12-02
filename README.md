@@ -1,15 +1,6 @@
 
 # V.04 versijoje:
 * Leidžiame pasirinkti, ar kursime 5 naujus failus sudarytus iš 1000, 10000, 100000, 1000000, 10000000 studentų.
-
-# V.03 versijoje:
-* Panaudotos, kur galima išimtys (naudojau try&catch), vietoj įprastinių tikrinimų;
-* Iškeltos funkcijos į atskirus cpp ir header failus, taip pat ir antraštiniai užrašymai iškelti (std ir include).
-
-# V.02 versijoje:
-* Kiekvienam įvedimui yra naudojamas patikrinimas, ar teisinga įvesta raidė ar skaičius;
-* Klausiama, ar nuskaitysime duomenis iš failo "kursiokai.txt";
-
 * Jei sutinkame:
   * Paklausiame, kiek norime, kad būtų namų darbų pažymių;
   * Visų pirma sugeneruojame penkis naujus failus su šabloniniais pavardais, pavardėmis, random sugeneruotais pažymiais iš namų darbų ir egzamino pažymiu;
