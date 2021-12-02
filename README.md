@@ -8,9 +8,9 @@
    * Išvedimas vectoriuje esančių protingų ir tinginių studentų į atskirus failus;
    * Išvedimas liste esančių protingų ir tinginių studentų į atskirus failus. 
    * Atliekamas rūšiavimas vectoriaus ir listo strategija nr. 2. (vectoriaus  ir listo rūšiavimas optimizuojamas naudojant algoritmus **std::partition**). </br>
-# Pvz. (ndsk = 3)
+## Pvz. (ndsk = 3)
   ![v1 0 rezultatai](https://user-images.githubusercontent.com/90412167/144485425-ac59d490-7b76-4fe7-8d1f-e95ccc242ae3.jpg)
- # Išvados:
+## Išvados:
  * Atminties atžvilgiu laimime naudodami 1 rūšiavimo strategiją;
  * Matoma, kad nuskaitymas į konteinerį listas yra efektyvesnis nei į konteinerį vectorius;
  * Matome, kad naudojant 1 strategiją su konteineriumi vectorius rūšiavimas įvyksta greičiau nei su konteineriumi listas;
