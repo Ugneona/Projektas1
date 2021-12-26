@@ -72,7 +72,7 @@ void spausdinti_struct(char& atsakymas, studentas(&grupe)[100], int& studentuSka
 }
 
 
-void spausdinimas(int& v1, char& atsakymas, vector <studentas>& sarasas, vector <double>& laikas, string &pav)
+void spausdinimas(int& v1, char& atsakymas, vector <studentas>& sarasas, vector <double>& laikas, string& pav)
 {
     string failoPav = pav + "_Studentai " + to_string(v1) + ".txt";
     auto start = std::chrono::high_resolution_clock::now();

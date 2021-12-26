@@ -153,6 +153,9 @@ void darbasSuFailu(vector <int>& v1, int& ndKiek, char& atsakymas)
         cout << "\n";
 
         laikas.clear();
+        grupe1.clear();
+        protingi.clear();
+        tinginiai.clear();
     }
 }
 void failoNuskaitymas(vector <studentas>& grupe1, int& v1, vector <double>& laikas, int& ndKiek)
