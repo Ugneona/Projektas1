@@ -224,65 +224,65 @@ void studentoUzpildymasRnd(int& studentuSkaicius, vector <studentas>& grupe)
         }
     }
     else {
-    for (int i = 0; i < studentuSkaicius; i++)
-    {
-        cout << "Iveskite " << i + 1 << " studento varda: " << endl;
-        cin >> stu.vardas;
-        while (check_string(stu.vardas) == false)
+        for (int i = 0; i < studentuSkaicius; i++)
         {
-            cin.clear();
-            cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
-            cin.ignore(256, '\n');
+            cout << "Iveskite " << i + 1 << " studento varda: " << endl;
             cin >> stu.vardas;
-        }
-        cout << "\n";
+            while (check_string(stu.vardas) == false)
+            {
+                cin.clear();
+                cout << "Nurodytas vardas netinka, prasome dar karta ivesti varda" << endl;
+                cin.ignore(256, '\n');
+                cin >> stu.vardas;
+            }
+            cout << "\n";
 
-        cout << "Dabar iveskite pavarde: " << endl;
-        cin >> stu.pavarde;
-        while (check_string(stu.pavarde) == false)
-        {
-            cin.clear();
-            cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
-            cin.ignore(256, '\n');
+            cout << "Dabar iveskite pavarde: " << endl;
             cin >> stu.pavarde;
-        }
-        cout << "\n";
+            while (check_string(stu.pavarde) == false)
+            {
+                cin.clear();
+                cout << "Nurodyta pavarde netinka, prasome dar karta ivesti pavarde" << endl;
+                cin.ignore(256, '\n');
+                cin >> stu.pavarde;
+            }
+            cout << "\n";
 
-        srand(time(NULL));
+            srand(time(NULL));
 
-        paz = rand() % 10 + 1;
-
-        cout << "Pazymys is namu darbu: " << paz << endl;
-        stu.nd.push_back(paz);
-        cout << "\n";
-
-        atsakymas = uzklausa_arBusDarPazymiu();
-        cout << "\n";
-
-        while (atsakymas == 'T' || atsakymas == 't')
-        {
             paz = rand() % 10 + 1;
 
             cout << "Pazymys is namu darbu: " << paz << endl;
             stu.nd.push_back(paz);
             cout << "\n";
+
             atsakymas = uzklausa_arBusDarPazymiu();
             cout << "\n";
+
+            while (atsakymas == 'T' || atsakymas == 't')
+            {
+                paz = rand() % 10 + 1;
+
+                cout << "Pazymys is namu darbu: " << paz << endl;
+                stu.nd.push_back(paz);
+                cout << "\n";
+                atsakymas = uzklausa_arBusDarPazymiu();
+                cout << "\n";
+            }
+
+            stu.egz = rand() % 10 + 1;
+
+            cout << "Egzamino pazymys: " << stu.egz << endl;
+            cout << "\n";
+
+            double vid = vidurkis(stu);
+            stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
+
+            double med = mediana(stu);
+            stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
+
+            grupe.push_back(stu);
+            stu.nd.clear();
         }
-
-        stu.egz = rand() % 10 + 1;
-
-        cout << "Egzamino pazymys: " << stu.egz << endl;
-        cout << "\n";
-
-        double vid = vidurkis(stu);
-        stu.galutinis_vidurkis = 0.6 * stu.egz + 0.4 * vid;
-
-        double med = mediana(stu);
-        stu.galutinis_mediana = 0.6 * stu.egz + 0.4 * med;
-
-        grupe.push_back(stu);
-        stu.nd.clear();
-    }
     }
 }

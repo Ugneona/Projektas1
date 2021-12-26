@@ -14,13 +14,13 @@ char uzklausa_delFailuDarbo()
         cin >> atsakymas;
     }
     return atsakymas;
-    
+
 }
 
 char uzklausa_delFailuGeneravimo()
 {
     char atsakymas;
-    cout << "Ar norite sugeneruoti 5 naujus failus su duomenimis apie studentus? T - jei norite, n - jei nenorite dirbti jau su sugeneruotais" << endl;
+    cout << "Ar norite sugeneruoti 5 naujus failus su duomenimis apie studentus? T - jei norite, n - jei norite dirbti jau su sugeneruotais" << endl;
     cin >> atsakymas;
 
     while (isalpha(atsakymas) == false || check_alpha(atsakymas) == false)

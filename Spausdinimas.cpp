@@ -154,9 +154,9 @@ void spausdinimas(int& v1, char& atsakymas, list <studentas>& sarasas, string& p
 
 void spausdinimas_nr1(int& v1, char& atsakymas, vector <studentas>& sarasas, vector <double>& laikas, string& pav)
 {
-    string failoPav = pav + "_Studentai " + to_string(v1) + ".txt";
+    string failoPav = pav + "_Studentai_ " + to_string(v1) + ".txt";
     auto start = std::chrono::high_resolution_clock::now();
-    ofstream rz("Rezultatai" + failoPav);
+    ofstream rz("Rezultatai_" + failoPav);
 
     if (atsakymas == 't' || atsakymas == 'T')
     {

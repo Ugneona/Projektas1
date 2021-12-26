@@ -9,4 +9,3 @@ struct studentas
     double galutinis_vidurkis;
     double galutinis_mediana;
 };
-
