@@ -75,7 +75,6 @@ void spausdinti_struct(char& atsakymas, studentas(&grupe)[100], int& studentuSka
 void spausdinimas(int& v1, char& atsakymas, vector <studentas>& sarasas, string& pav)
 {
     string failoPav = pav + "_Studentai " + to_string(v1) + ".txt";
-
     ofstream rz("Rezultatai_vector_" + failoPav);
 
     if (atsakymas == 't' || atsakymas == 'T')
@@ -87,6 +86,7 @@ void spausdinimas(int& v1, char& atsakymas, vector <studentas>& sarasas, string&
         {
             rz << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_vidurkis << endl;
         }
+
     }
     else
     {
@@ -97,6 +97,7 @@ void spausdinimas(int& v1, char& atsakymas, vector <studentas>& sarasas, string&
         {
             rz << setw(20) << left << stu.pavarde << setw(20) << left << stu.vardas << setw(20) << left << fixed << setprecision(2) << stu.galutinis_mediana << endl;
         }
+
     }
 
     rz.close();
@@ -131,4 +132,3 @@ void spausdinimas(int& v1, char& atsakymas, list <studentas>& sarasas, string& p
 
     rz.close();
 }
-

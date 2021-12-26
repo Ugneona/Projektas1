@@ -4,7 +4,6 @@
 #include "Failas.h"
 #include "Spausdinimas.h"
 
-
 int main()
 {
     int studentSk;

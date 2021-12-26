@@ -11,6 +11,7 @@
 #include <sstream>
 #include <chrono>
 #include <list>
+#include <iterator>
 
 
 using std::cin;
@@ -30,3 +31,4 @@ using std::ofstream;
 using std::stringstream;
 using std::to_string;
 using std::list;
+using std::advance;
