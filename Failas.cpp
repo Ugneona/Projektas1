@@ -130,7 +130,7 @@ void darbasSuFailu_nr1(vector <int>& v1, char& atsakymas)
         laikas.reserve(4);
 
         auto start = std::chrono::high_resolution_clock::now();
-        failoNuskaitymas(grupe1, v1.at(i), laikas);
+        failoNuskaitymas(grupe1, v1.at(i));
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
         laikas.push_back(diff.count());
@@ -181,13 +181,13 @@ void darbasSuFailu(vector <int>& v1, char& atsakymas)
         laikas_list.reserve(3);
 
         auto start = std::chrono::high_resolution_clock::now();
-        failoNuskaitymas(grupe_vector, v1.at(i), laikas_vector);
+        failoNuskaitymas(grupe_vector, v1.at(i));
         auto end = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff = end - start;
         laikas_vector.push_back(diff.count());
 
         auto start1 = std::chrono::high_resolution_clock::now();
-        failoNuskaitymas(grupe_list, v1.at(i), laikas_list);
+        failoNuskaitymas(grupe_list, v1.at(i));
         auto end1 = std::chrono::high_resolution_clock::now();
         std::chrono::duration<double> diff1 = end1 - start1;
         laikas_list.push_back(diff1.count());
@@ -214,10 +214,10 @@ void darbasSuFailu(vector <int>& v1, char& atsakymas)
         tinginiai_vector.clear();
         tinginiai_list.clear();
 
-        failoNuskaitymas(grupe_vector, v1.at(i), laikas_vector);
-        failoNuskaitymas(grupe_list, v1.at(i), laikas_list);
+        failoNuskaitymas(grupe_vector, v1.at(i));
+        failoNuskaitymas(grupe_list, v1.at(i));
 
-        rusiavimas_strategija_nr2(grupe_vector, grupe_list, protingi_vector, protingi_list, tinginiai_vector, tinginiai_list, laikas_vector, laikas_list, atsakymas);
+        rusiavimas_strategija_nr2(grupe_vector, grupe_list, tinginiai_vector, tinginiai_list, laikas_vector, laikas_list, atsakymas);
         
         cout << "| " << v1.at(i) << setw(vieta) << " studentu surusiavimas 2 strategija " << "| " << setw(23) << left << laikas_vector.at(2) << "| " << setw(19) << left << laikas_list.at(2) << "|" << endl;
         cout << "---------------------------------------------------------------------------------------------" << endl;
@@ -234,7 +234,7 @@ void darbasSuFailu(vector <int>& v1, char& atsakymas)
         
     }
 }
-void failoNuskaitymas(vector <studentas>& grupe1, int& v1, vector <double>& laikas)
+void failoNuskaitymas(vector <studentas>& grupe1, int& v1)
 {
     double temp;
     int i = 0;
@@ -291,7 +291,7 @@ void failoNuskaitymas(vector <studentas>& grupe1, int& v1, vector <double>& laik
     nuskaitymas.close();
 }
 
-void failoNuskaitymas(list <studentas>& grupe1, int& v1, vector <double>& laikas)
+void failoNuskaitymas(list <studentas>& grupe1, int& v1)
 {
     double temp;
     int i = 0;
@@ -429,7 +429,7 @@ void rusiavimas_strategija_nr1(vector <studentas>& grupe_vector, list <studentas
         laikas_list.push_back(diff1.count());
     }
 }
-void rusiavimas_strategija_nr2(vector <studentas>& grupe_vector, list <studentas>& grupe_list, vector <studentas>& protingi_vector, list <studentas>& protingi_list, vector <studentas>& tinginiai_vector, list <studentas>& tinginiai_list, vector <double>& laikas_vector, vector <double>& laikas_list, char& atsakymas)
+void rusiavimas_strategija_nr2(vector <studentas>& grupe_vector, list <studentas>& grupe_list, vector <studentas>& tinginiai_vector, list <studentas>& tinginiai_list, vector <double>& laikas_vector, vector <double>& laikas_list, char& atsakymas)
 {
     if (atsakymas == 't' || atsakymas == 'T')
     {
